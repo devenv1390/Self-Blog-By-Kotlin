@@ -12,6 +12,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.nio.charset.StandardCharsets
 
+/**
+ * Check if the user exists in the database.
+ */
 @Api(routeOverride = "usercheck")
 suspend fun userCheck(context: ApiContext) {
     try {
@@ -36,6 +39,26 @@ suspend fun userCheck(context: ApiContext) {
         }
     } catch (e: Exception) {
         context.res.setBodyText(Json.encodeToString(Exception(e.message)))
+    }
+}
+
+/**
+ * Check if the user id exists in the database.
+ */
+@Api(routeOverride = "checkuserid")
+suspend fun checkUserId(context: ApiContext){
+    try {
+        val idRequest = context.req.body?.decodeToString()?.let { Json.decodeFromString<String>(it) }
+        val result = idRequest?.let {
+            context.data.getValue<MongoDB>().checkUserId(it)
+        }
+        if(result != null){
+            context.res.setBodyText(Json.encodeToString(result))
+        }else{
+            context.res.setBodyText(Json.encodeToString(false))
+        }
+    }catch (e: Exception){
+        context.res.setBodyText(Json.encodeToString(false))
     }
 }
 
