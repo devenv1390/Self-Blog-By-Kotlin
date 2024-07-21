@@ -1,5 +1,6 @@
 package com.ky.blogmultiplatform.styles
 
+import com.ky.blogmultiplatform.models.Theme
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.border

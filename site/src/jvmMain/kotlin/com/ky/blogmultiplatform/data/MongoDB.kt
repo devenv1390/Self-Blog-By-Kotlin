@@ -12,15 +12,15 @@ import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.reactivestreams.getCollection
 
 @InitApi
-fun initMongoDB(context: InitApiContext){
+fun initMongoDB(context: InitApiContext) {
     System.setProperty(
         "org.litote.mongo.test.mapping.service",
-        "org.litote.kmongo.serialization.SerializationClassMappingTypeService"
+        "org.litote.kmongo.serialization.SerializationClassMappingTypeService",
     )
     context.data.add(MongoDB(context))
 }
 
-class MongoDB(val context: InitApiContext): MongoRepository {
+class MongoDB(val context: InitApiContext) : MongoRepository {
     private val client = KMongo.createClient()
     private val database = client.getDatabase(DATABASE_NAME)
     private val userCollection = database.getCollection<User>()
@@ -34,7 +34,7 @@ class MongoDB(val context: InitApiContext): MongoRepository {
                         User::password eq user.password
                     )
                 ).awaitFirst()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             context.logger.error(e.message.toString())
             null
         }
