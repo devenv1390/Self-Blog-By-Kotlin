@@ -6,6 +6,6 @@ import org.jetbrains.compose.web.dom.Text
 
 @Page
 @Composable
-fun Home() {
+fun HomeScreen() {
     Text("Hello World")
 }
